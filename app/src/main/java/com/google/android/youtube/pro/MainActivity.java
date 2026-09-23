@@ -99,7 +99,8 @@ public class MainActivity extends Activity {
 
         web.addJavascriptInterface(new WebAppInterface(this, web), "Android");
         web.setWebChromeClient(new YTProWebChromeClient(this, web));
-        web.setWebViewClient(new YTProWebViewClient(this, web));
+        web.setWebViewClient(new com.google.android.youtube.pro.webview.YTProWebViewClient(this, web) { @Override public void onPageFinished(android.webkit.WebView view, String url) { super.onPageFinished(view, url); view.evaluateJavascript("javascript:(function() { var style = document.createElement('style'); style.innerHTML = 'ytd-rich-section-renderer, ytd-reel-shelf-renderer, yt-pivot-button-renderer[target-id=\"pivot-shorts\"], a[href*=\"/shorts\"] { display: none !important; }'; document.head.appendChild(style); })()", null); } });
+        
         
         web.loadUrl(url);
 
